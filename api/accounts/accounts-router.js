@@ -21,7 +21,7 @@ try{
 }
 })
 
-router.post('/', checkAccountPayload, checkAccountNameUnique, async (req, res, next) => {
+router.post('/', checkAccountPayload,checkAccountNameUnique,  async (req, res, next) => {
   // DO YOUR MAGIC
   // try{
   //   const post = await accountMod.create({name: "william", budget: 2750})
@@ -30,7 +30,9 @@ router.post('/', checkAccountPayload, checkAccountNameUnique, async (req, res, n
   //   next(err)
   // }
   try{
-    const createdPost = await accountMod.create(req.body)
+    const createdPost = await accountMod.create({
+      name: req.body.name.trim(), 
+      budget: req.body.budget})
     res.status(201).json(createdPost)
   }catch(err){
     next(err)
