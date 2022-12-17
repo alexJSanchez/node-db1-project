@@ -7,7 +7,7 @@ const getAll = () => {
 
 const getById = id => {
   // DO YOUR MAGIC
- return db.select('*').from('accounts').where({id: id});
+ return db('accounts').where('id', id).first();
 }
 
 const create = account => {

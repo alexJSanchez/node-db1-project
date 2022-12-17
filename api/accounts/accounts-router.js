@@ -1,18 +1,25 @@
 const router = require('express').Router()
 const accountMod = require('./accounts-model')
+const {checkAccountId} = require('./accounts-middleware')
 
 router.get('/', async (req, res, next) => {
   // DO YOUR MAGIC
-  const accounts = await accountMod.getAll()
-  res.json(accounts)
-  next()
+  try{
+    const accounts = await accountMod.getAll()
+    res.json(accounts)
+    }catch(err){
+      next(err)
+    }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', checkAccountId , async (req, res, next) => {
   // DO YOUR MAGIC
-  const accountById = await accountMod.getById(req.params.id)
-  res.json(accountById)
-  next()
+try{
+  const account = await accountMod.getById(req.params.id)
+  res.json(account) 
+}catch(err){
+  next(err)
+}
 })
 
 router.post('/', (req, res, next) => {
@@ -29,6 +36,9 @@ router.delete('/:id', (req, res, next) => {
 
 router.use((err, req, res, next) => { // eslint-disable-line
   // DO YOUR MAGIC
+  res.status(err.status || 500).json({
+    message: err.message,
+  })
 })
 
 module.exports = router;

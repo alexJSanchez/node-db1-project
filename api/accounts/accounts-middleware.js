@@ -14,16 +14,15 @@ exports.checkAccountId = async (req, res, next) => {
   try{
     const account = await accountMod.getById(req.params.id)
     if(!account){
-      res.status(400).json({
-        message: 'no post here'
+      res.status(404).json({
+        message: 'account not found'
       })
     }else{
-      req.accId = account
+      req.accId = account;
+      next()
     }
   }catch(err){
-    res.status(500).json({
-      message: 'problem finding user'
-    })
+    next(err)
   }
 }
 
