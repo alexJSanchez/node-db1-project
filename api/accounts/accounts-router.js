@@ -8,8 +8,11 @@ router.get('/', async (req, res, next) => {
   next()
 })
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   // DO YOUR MAGIC
+  const accountById = await accountMod.getById(req.params.id)
+  res.json(accountById)
+  next()
 })
 
 router.post('/', (req, res, next) => {
