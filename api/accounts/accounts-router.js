@@ -56,7 +56,7 @@ router.delete('/:id',checkAccountId, async (req, res, next) => {
   try{
    const deletedPost = await accountMod.getById(req.params.id)
    const deletedRes = await accountMod.deleteById(req.params.id)
-   res.json(deletedPost, deletedRes)
+   res.json(deletedPost)
   }catch(err){
     next(err)
   }
