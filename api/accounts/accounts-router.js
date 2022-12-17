@@ -39,8 +39,16 @@ router.post('/', checkAccountPayload,checkAccountNameUnique,  async (req, res, n
   }
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id',checkAccountId,checkAccountPayload,checkAccountNameUnique, async (req, res, next) => {
   // DO YOUR MAGIC
+  try{
+    const createdPost = await accountMod.updateById(req.params.id, {
+      name: req.body.name.trim(), 
+      budget: req.body.budget})
+    res.status(200).json(req.body)
+  }catch(err){
+    next(err)
+  }
 });
 
 router.delete('/:id', (req, res, next) => {

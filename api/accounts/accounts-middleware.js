@@ -22,7 +22,6 @@ exports.checkAccountPayload = (req, res, next) => {
    }else{
     next()
    }
-   
 }
 
 exports.checkAccountNameUnique = async (req, res, next) => {
